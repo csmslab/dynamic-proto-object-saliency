@@ -1,0 +1,21 @@
+function [newMap] = GaussFilter(map,params,dir)
+%smooths map with a gaussian defined by params
+
+gPrs = params.gPrs;
+dim = -5:5;
+msk = makeGauss1D(dim,gPrs);
+
+if nargin == 2
+    newMap = normalizeImage(conv2(msk,msk,map,'same'));
+elseif nargin == 3
+    if strcmp(dir,'x')
+        newMap = normalizeImage(conv2(msk,1,map,'same'));
+    elseif strcmp(dir,'y')
+        newMap = normalizeImage(conv2(1,msk,map,'same'));
+    else
+        error('Please enter "x" or "y" direction for filtering');
+    end
+else
+    error('Incorrect number of inputs');
+
+end

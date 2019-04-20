@@ -1,0 +1,3 @@
+function img = magFilter()
+%Performs temporal filtering of an input sequence with the magnocellular
+%temporal difference filter

@@ -1,0 +1,19 @@
+function plotF(msk)
+
+msk_shift = fftshift(msk);
+uv = fft2(msk_shift);
+uv = fftshift(uv);
+
+figure;
+subplot(4,1,1);
+title('Filter msk')
+surf(msk);
+subplot(4,1,2);
+title('Real F component');
+surf(real(uv));
+subplot(4,2,1)
+title('Imaginary F component');
+surf(imag(uv));
+subplot(4,2,2);
+title('F response');
+surf(abs(uv));

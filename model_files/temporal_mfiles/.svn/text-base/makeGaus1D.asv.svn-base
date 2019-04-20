@@ -1,0 +1,4 @@
+function msk = makeGaus1D(params)
+%makes a 1D  gaussian mask according to params
+
+

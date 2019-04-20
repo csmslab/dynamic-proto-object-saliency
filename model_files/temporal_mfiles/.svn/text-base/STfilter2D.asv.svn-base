@@ -1,0 +1,90 @@
+function map =  STfilter2D(frames)
+sigma = 1;
+x = -4*sigma:1:4*sigma;
+y = -4*sigma:1:4*sigma;
+z = -4*sigma:1:4*sigma;
+X = x';
+Y = y';
+T = z';
+% [X,Y] = meshgrid(x,y);
+% T = X;
+sx = sigma;
+st = sigma;
+sy = sigma;
+
+wx0 = 1;
+wt0 = 1;
+wy0 = 1;
+
+
+gox = 1./(sqrt(2*pi).*sx).*exp(-X.^2./(2.*sx.^2)).*sin(2.*pi.*wx0.*X);
+gex = 1./(sqrt(2*pi).*sx).*exp(-X.^2./(2.*sx.^2)).*cos(2.*pi.*wx0.*X);
+goy = 1./(sqrt(2*pi).*sy).*exp(-Y.^2./(2.*sx.^2)).*sin(2.*pi.*wy0.*Y);
+gey = 1./(sqrt(2*pi).*sy).*exp(-Y.^2./(2.*sx.^2)).*cos(2.*pi.*wy0.*Y);
+got = 1./(sqrt(2*pi).*st).*exp(-T.^2./(2.*st.^2)).*sin(2.*pi.*wt0.*T);
+get = 1./(sqrt(2*pi).*st).*exp(-T.^2./(2.*st.^2)).*cos(2.*pi.*wt0.*T);
+
+% r = makeTemporalFilter('strong'); %r(t)
+% dw = 2*pi/5;
+% r = sin(dw:dw:2*pi);
+% g = makeSpatialFilter([2*pi,pi/4,0]);%g(x,y)
+% h = makeSpatialFilter([2*pi,pi/4,-pi/2]);%g(x,y)
+% res = zeros(size(frames,1),size(frames,2),size(frames,4));
+% numFrames = size(frames,4);
+
+[Ge Go] = Gfilter(gex,gox,gey,goy,get,got,frames);
+[Fe Fo] = Ffilter(gex,gox,gey,goy,get,got,frames);
+map = Ge;
+end
+
+%
+% for n = 1:numFrames-length(r)
+%     for f = 1:length(r)%size(frames,4)
+%         res1(:,:,f) = double(imfilter(frames(:,:,2,f+n),(g+h),'conv','replicate'));%+imfilter(frames(:,:,1,f+n),r(length(r)+1-f).*h,'conv','replicate');      %r(f).
+%         res(:,:,f) = r(length(r)+1-f).*res1(:,:,f);
+%     end
+%     map(:,:,1,n) = normalizeImage(sum(res,3));
+%     map(:,:,2,n) = map(:,:,1,n);
+%     map(:,:,3,n) = map(:,:,1,n);
+% end
+
+function [Ge Go] = Gfilter(gxe,gxo,gye,gyo,gt1,gt2,frames)
+for n = 1:size(frames,4)-length(gt1)
+    for f = 1:length(gt1)%size(frames,4)
+        Gye(:,:) = conv2(gxe,gye,frames(:,:,1,f+n-1))+ conv2(gxo,gyo,frames(:,:,1,f+n-1));
+        Gyo(:,:) = conv2(gxe,gyo,frames(:,:,1,f+n-1))+ conv2(gxo,gye,frames(:,:,1,f+n-1));
+        Gtemp1(:,:,f) = gt1(length(gt1)+1-f).*Gyo+gt2(length(gt1)+1-f).*Gye;
+        Gtemp2(:,:,f) = gt2(length(gt1)+1-f).*Gyo+gt1(length(gt1)+1-f).*Gye;
+    end
+    Ge(:,:,1,n) = normalizeImage(sum(Gtemp1,3));
+    Ge(:,:,2,n) = Ge(:,:,1,n);
+    Ge(:,:,3,n) = Ge(:,:,1,n);
+
+    Go(:,:,1,n) = normalizeImage(sum(Gtemp2,3));
+    Go(:,:,2,n) = Go(:,:,1,n);
+    Go(:,:,3,n) = Go(:,:,1,n);
+end
+
+end
+
+
+function [Fe Fo] = Ffilter(gxe,gxo,gye,gyo,gt1,gt2,frames)
+for n = 1:size(frames,4)-length(gt1)
+    for f = 1:length(gt1)%size(frames,4)
+        Fye(:,:) = conv2(gxe,gye,frames(:,:,1,f+n-1))- conv2(gxo,gyo,frames(:,:,1,f+n-1));
+        Fyo(:,:) = conv2(gxe,gyo,frames(:,:,1,f+n-1))- conv2(gxo,gye,frames(:,:,1,f+n-1));
+        Ftemp1(:,:,f) = gt1(length(gt1)+1-f).*Fyo+gt2(length(gt1)+1-f).*Fye;
+        Ftemp2(:,:,f) = gt2(length(gt1)+1-f).*Fyo+gt1(length(gt1)+1-f).*Fye;
+    end
+
+    Fe(:,:,1,n) = normalizeImage(sum(Ftemp1,3));
+    Fe(:,:,2,n) = Fe(:,:,1,n);
+    Fe(:,:,3,n) = Fe(:,:,1,n);
+
+    Fo(:,:,1,n) = normalizeImage(sum(Ftemp2,3));
+    Fo(:,:,2,n) = Fo(:,:,1,n);
+    Fo(:,:,3,n) = Fo(:,:,1,n);
+
+end
+
+end

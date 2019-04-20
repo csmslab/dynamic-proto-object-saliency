@@ -1,0 +1,107 @@
+function newMap =  STfilter(frames,params)
+%performs spatio temporal filtering as defined by params on the input
+%frames
+%
+%Inputs:
+%frames - input frames to be filtered
+%params - parameter structure
+%
+%Outputs:
+%newMap - filtered frames
+%
+%By Alexander Russell, Johns Hopkins University, 2010
+
+
+%% Create Filters
+fprintf('Generating Filters....\n');
+[gx, gy, gt] = STkernel2(params);
+plotfilts;
+%% Blur input
+%Gaussian blur frames;
+fprintf('Blurring frames...\n');
+numFrames = size(frames,4);
+
+for f = 5:numFrames
+   map(:,:,f-4) = GaussFilter(frames(10:end-10,10:end-10,2,f),params);
+   mapge(:,:,f-4) = conv2(1,gx.e,squeeze(map(:,:,f-4)),'same');
+   mapgo(:,:,f-4) = conv2(1,gx.o,squeeze(map(:,:,f-4)),'same');
+end
+
+fprintf('x Filter....\n');
+
+for y = 1:size(map(:,:,1),1)   
+     mapx_texe = conv2(gx.e,gt.e,squeeze(map(y,:,:)),'same');
+     mapx_toxo = conv2(gx.o,gt.o,squeeze(map(y,:,:)),'same');
+     mapx_toxe = conv2(gx.e,gt.o,squeeze(map(y,:,:)),'same');
+     mapx_texo = conv2(gx.o,gt.e,squeeze(map(y,:,:)),'same');   
+   
+     mapx_re = mapx_texe+mapx_toxo;
+     mapx_ro = mapx_toxe-mapx_texo;
+     mapx_le = mapx_texe-mapx_toxo;
+     mapx_lo = mapx_toxe+mapx_texo;
+
+     mapx_r = sqrt(mapx_re.^2+mapx_ro.^2);
+     mapx_l = sqrt(mapx_le.^2+mapx_lo.^2);
+       if y > 260
+         'k';
+     end
+     ge =squeeze(mapge(y,:,:));
+     go =squeeze(mapgo(y,:,:));
+     ge((ge<1e-5)&(ge>-1e-5))=1e-6;
+     go((go<1e-5)&(go>-1e-5))=1e-6;
+     temp =  mapx_r - mapx_l;
+%      temp(temp<0.5*max(max(temp))) = 0;
+%       mapx_r(mapx_r<0.5*max(max(mapx_r))) = 0;
+%       mapx_l((mapx_l)<0.5*max(max(mapx_l))) = 0;
+      mapx(y,:,:) = temp./sqrt(1+ge.^2+go.^2);
+end
+
+% 
+  for x = 1:size(map(:,:,1),2)   
+       mapy_teye = conv2(gy.e,gt.e,squeeze(map(:,x,:)),'same');
+       mapy_toyo = conv2(gy.o,gt.o,squeeze(map(:,x,:)),'same');
+       mapy_toye = conv2(gy.e,gt.o,squeeze(map(:,x,:)),'same');
+       mapy_teyo = conv2(gy.o,gt.e,squeeze(map(:,x,:)),'same');   
+       
+       mapy_re = mapy_teye+mapy_toyo;
+       mapy_ro = mapy_teyo-mapy_toye;
+       mapy_le = mapy_teye-mapy_toyo;
+       mapy_lo = mapy_teyo+mapy_toye;
+       mapy_r = sqrt(mapy_re.^2+mapy_ro.^2);
+       mapy_l = sqrt(mapy_le.^2+mapy_lo.^2);
+       ge =squeeze(mapge(:,x,:));
+       go =squeeze(mapgo(:,x,:));
+       ge((ge<1e-5)&(ge>-1e-5))=1e-6;
+       go((go<1e-5)&(go>-1e-5))=1e-6;
+       temp =  mapy_l - mapy_r;
+%        temp(temp<0.5*max(max(temp))) = 0;
+       mapy(:,x,:) = temp./sqrt(1+ge.^2+go.^2);
+  end
+% for x = 1:size(map(:,:,1),1)
+%      mapyre(:,:) = normalizeImage(conv2(squeeze(map(:,x,:)),gy.re))';  
+%      mapyro(:,:) = normalizeImage(conv2(squeeze(map(:,x,:)),gy.ro))';
+%      mapyle(:,:) = normalizeImage(conv2(squeeze(map(:,x,:)),gy.le))';  
+%      mapylo(:,:) = normalizeImage(conv2(squeeze(map(:,x,:)),gy.lo))';
+%      mapy(:,x,:) = normalizeImage(mapyro(:,:).^2+mapyre(:,:).^2-mapylo(:,:).^2-mapyle(:,:).^2);
+% end
+
+newMap(:,:,1,:) = mapx;
+newMap(:,:,2,:) = mapx;
+newMap(:,:,3,:) = mapx;
+close all;
+% r = makeTemporalFilter('strong'); %r(t)
+% dw = 2*pi/5;
+% r = sin(dw:dw:2*pi);
+% g = makeSpatialFilter([2*pi,pi/4,0]);%g(x,y)
+% h = makeSpatialFilter([2*pi,pi/4,-pi/2]);%g(x,y)
+% for n = 1:numFrames-length(r)
+%     %Gaussian Blur
+% 
+%     for f = 1:length(r)%size(frames,4)
+%         res1(:,:,f) = double(imfilter(frames(:,:,2,f+n),(g+h),'conv','replicate'));%+imfilter(frames(:,:,1,f+n),r(length(r)+1-f).*h,'conv','replicate');      %r(f).
+%         res(:,:,f) = r(length(r)+1-f).*res1(:,:,f);
+%     end
+%     map(:,:,1,n) = normalizeImage(sum(res,3));
+%     map(:,:,2,n) = map(:,:,1,n);
+%     map(:,:,3,n) = map(:,:,1,n);
+% end

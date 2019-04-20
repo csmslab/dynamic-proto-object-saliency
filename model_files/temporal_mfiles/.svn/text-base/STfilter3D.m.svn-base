@@ -1,0 +1,143 @@
+function [map] = STfilter3D(frames,params)
+%filters frames with the 3D Gabor Spatial-Temporal filter built from the
+%specificiations in the params structure. The filter is based off the work
+%done by Heeger (1987)
+%
+%The direction of motion for the filters is
+%
+%               -dy/dt
+%                 |
+%         g3      |     g2
+%                 |
+%       -dx/dt----------- +dx/dt
+%                 |
+%         g4      |     g1
+%                 |
+%                +dy/dt
+%
+% g1 : (+dx/dt,+dy/dt)
+% g2 : (+dx/dt,-dy/dt)
+% g3 : (-dx/dt,-dy/dt)
+% g4 : (-dx/dt,+dy/dt)
+%
+%The opponency channels are g1-g3 and g2-g4
+%
+%By Alexander Russell, Johns Hopkins University, 2011
+
+%% Generate Filter Kernels
+
+fprintf('Generating 3D gabor kernels. \n');
+[g] = STkernel(params);
+% frames = 1;
+%% loop through all frames and convolve with all the filters
+fprintf('Filtering frames with spatiotemporal filters...');
+for l = 1:size(g,2)
+    for s = 1:size(g(l).speed)
+        for ori = 1:size(g(l).speed(s).ori,2)
+            
+            gx = g(l).speed(s).ori(ori).gx;
+            gy = g(l).speed(s).ori(ori).gy;
+            gt = g(l).speed(s).ori(ori).gt;
+            
+            gto(1,1,:) = gt.o;
+            gte(1,1,:) = gt.e;
+            
+            XeYe = imfilter(imfilter(frames,gx.e),gy.e','replicate');
+            XeYo = imfilter(imfilter(frames,gx.e),gy.o','replicate');
+            XoYe = imfilter(imfilter(frames,gx.o),gy.e','replicate');
+            XoYo = imfilter(imfilter(frames,gx.o),gy.o','replicate');
+            
+            XeYeTe = imfilter(XeYe,gte,'replicate');
+            XeYeTo = imfilter(XeYe,gto,'replicate');
+            XeYoTo = imfilter(XeYo,gto,'replicate');
+            XeYoTe = imfilter(XeYo,gte,'replicate');
+            
+            XoYeTo = imfilter(XoYe,gto,'replicate');
+            XoYoTe = imfilter(XoYo,gte,'replicate');
+            XoYeTe = imfilter(XoYe,gte,'replicate');
+            XoYoTo = imfilter(XoYo,gto,'replicate');
+            
+%             XeYeTe = imfilter(XeYe,gte)./(XeYe+1e-6);
+%             XeYeTo = imfilter(XeYe,gto)./(XeYe+1e-6);
+%             XeYoTo = imfilter(XeYo,gto)./(XeYo+1e-6);
+%             XeYoTe = imfilter(XeYo,gte)./(XeYo+1e-6);
+%             
+%             XoYeTo = imfilter(XoYe,gto)./(XoYe+1e-6);
+%             XoYoTe = imfilter(XoYo,gte)./(XoYo+1e-6);
+%             XoYeTe = imfilter(XoYe,gte)./(XoYe+1e-6);
+%             XoYoTo = imfilter(XoYo,gto)./(XoYo+1e-6);
+                                    
+            g1e = XeYeTe...
+                - XoYoTe...
+                + XoYeTo...
+                + XeYoTo; 
+            
+            g1o = XoYeTe...
+                + XoYoTo...
+                + XeYoTe...
+                - XeYeTo; 
+            
+            g3e = XeYeTe...
+                - XoYoTe...
+                - XoYeTo...
+                - XeYoTo; 
+            
+            g3o = XoYeTe...
+                - XoYoTo...
+                + XeYoTe...
+                + XeYeTo; 
+           
+            g2e = XeYeTe ...
+                + XoYoTe ...
+                + XoYeTo ...
+                - XeYoTo; 
+            
+            g2o = -XoYeTe...
+                  +XoYoTo...
+                  +XeYoTe...
+                  +XeYeTo; 
+              
+            g4e = XeYeTe ...
+                + XoYoTe...
+                - XoYeTo...
+                + XeYoTo; 
+            
+            g4o = -XoYeTe...
+                - XoYoTo...
+                + XeYoTe...
+                - XeYeTo;             
+           
+        end
+    end
+end
+%% Guassian blur image
+% g1 = (g1e.^2+g1o.^2);
+% g2 = (g2e.^2+g2o.^2);
+% g3 = (g3e.^2+g3o.^2);
+% g4 = (g4e.^2+g4o.^2);
+
+g1xye = XeYe-XoYo;
+g1xyo = XeYo+XoYe;
+g2xye = XeYe+XoYo;
+g2xyo = XeYo-XoYe;
+% g1 = (g1e.^2+g1o.^2)./(g1xye.^2+g1xyo.^2+g2xye.^2+g2xyo.^2+1e-12);
+% g2 = (g2e.^2+g2o.^2)./(g1xye.^2+g1xyo.^2+g2xye.^2+g2xyo.^2+1e-12);
+% g3 = (g3e.^2+g3o.^2)./(g1xye.^2+g1xyo.^2+g2xye.^2+g2xyo.^2+1e-12);
+% g4 = (g4e.^2+g4o.^2)./(g1xye.^2+g1xyo.^2+g2xye.^2+g2xyo.^2+1e-12);
+g1 = (g1e.^2+g1o.^2);
+g2 = (g2e.^2+g2o.^2);
+g3 = (g3e.^2+g3o.^2);
+g4 = (g4e.^2+g4o.^2);
+fout = [g1 g2;g3 g4];
+fout(floor(size(fout,1)/2),:,:) = max(max(max(fout))+5);
+fout(:,floor(size(fout,2)/2),:) = max(max(max(fout))+5);
+implay(fout);
+% all = g1e.^2+g1o.^2+g2e.^2+g2o.^2+g3e.^2+g3o.^2+g4e.^2+g4o.^2;
+% implay(all)
+numFrames = size(frames,4);
+for f = 1:numFrames
+    
+end
+fprintf('\n');
+
+

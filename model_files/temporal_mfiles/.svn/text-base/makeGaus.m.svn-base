@@ -1,0 +1,2 @@
+function msk = makeGaus(dim,params)
+%makes a 1D or 2D gaussian marks according to params

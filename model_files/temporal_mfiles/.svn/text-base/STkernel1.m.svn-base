@@ -1,0 +1,93 @@
+% function GaborKernel(params)
+%creates a 2D or 3D gabor kernel according to the parameters in params
+%Default is 2D
+%
+%Inputs:
+%
+%params - parameter structure
+%
+%Outputs
+%
+%g - structure of filter components
+%
+%By Alexander Russell, Johns Hopkins University, 2011.
+%
+%This code is based off Heeger (1987).
+
+twoD = 0;
+
+
+%standard deviations 
+sx = 3;
+sy = 3;
+st = 9;
+
+osize = 6;
+theta =90;
+
+wxy = 1/(2*osize);
+wx = sqrt(wxy^2/(1+tand(theta)^2));
+wy = sqrt(wxy^2-wx^2);
+
+lambdaX = 1/wx;
+lambdaY = 1/wy;
+
+fdes = -0.25; %pixels per frame
+f = -fdes/(osize);
+
+wt0 = 2*pi*f/2;
+wx0 = 2*pi*wx;
+wy0 = 2*pi*wy;
+
+
+ clear gy
+ clear gt
+ clear gx
+
+if twoD == 1    
+    gx.e = exp(-x.^2/(2.*sx^2)).*cos(wx0.*x);
+    gy.e = exp(-y.^2/(2.*sy^2)).*cos(wy0.*y);
+    gt.e = exp(-t.^2/(2.*st^2)).*cos(wt0.*t);
+    gx.o = exp(-x.^2/(2.*sx^2)).*sin(wx0.*x);
+    gy.o = exp(-y.^2/(2.*sy^2)).*sin(wy0.*y);
+    gt.o = exp(-t.^2/(2.*st^2)).*sin(wt0.*t);
+    
+    [Xe Ye] = meshgrid(gx.e,gy.e);
+    [Xo Yo] = meshgrid(gx.o,gx.o);
+    
+    g1 = (Xe.*Ye-Xo.*Yo);
+    close all
+    figure;imagesc(g1);
+else %3D  gabor filter
+    gx.e = exp(-x.^2/(2.*sx^2)).*cos(wx0.*x);
+    gy.e = exp(-y.^2/(2.*sy^2)).*cos(wy0.*y);
+    gt.e = exp(-t.^2/(2.*st^2)).*cos(wt0.*t);
+    gx.o = exp(-x.^2/(2.*sx^2)).*sin(wx0.*x);
+    gy.o = exp(-y.^2/(2.*sy^2)).*sin(wy0.*y);
+    gt.o = exp(-t.^2/(2.*st^2)).*sin(wt0.*t);
+    
+    [Xe Ye Te] = meshgrid(gx.e,gy.e,gt.e);
+    [Xo Yo To] = meshgrid(gx.o,gy.o,gt.o);
+    g1 = (Te.*Xe.*Ye...
+         -Te.*Xo.*Yo...
+         -To.*Xo.*Ye...
+         -To.*Xe.*Yo);
+    [xind yind] = size(squeeze(g1(:,:,1)));
+    gx = squeeze(g1(round(xind/2),:,:));
+    gy = squeeze(g1(:,round(yind/2),:));
+    close all
+    figure;
+    subplot(2,2,1)
+    imagesc(squeeze(g1(:,:,1)));
+    subplot(2,2,2)
+    imagesc(gx);
+    xlabel('t')
+    ylabel('x')
+    subplot(2,2,3);
+    imagesc(gy);
+    xlabel('t')
+    ylabel('y')
+end
+
+
+

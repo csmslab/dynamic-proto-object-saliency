@@ -1,0 +1,28 @@
+function [mov map] = filterTest()
+params = defaultTemporalParams;
+close all
+%%Generate filter parameters
+theta =[30];
+target.theta = theta;
+target.size = [4];
+target.f = [0.75];
+params.target = target;
+
+%%     Generate Test Data
+ftemp = makeTestData(50,30,90);
+for i = 1:size(ftemp,2)
+    frames(:,:,:,i) = imresize(ftemp(i).cdata,[128 128]);
+end
+
+frames = rgb2int_frames(frames);
+
+% implay(frames)
+[mapx] = STfilter3Dconv(frames,params);
+% %%     Filter Object
+% 
+% %% Merge X and Y maps
+% [map, angles] = mergeMaps(mapx,mapy,params);
+% mov = createFrames(map);
+% close all
+% h = figure;
+% movie(h,mov,5);

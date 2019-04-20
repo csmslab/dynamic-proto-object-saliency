@@ -1,0 +1,131 @@
+%tests 3D motion filters designed using seperable components
+%
+%Filters are labelled according to
+%
+%               -dy/dt
+%                 |
+%         g3      |     g2
+%                 |
+%       -dx/dt----------- +dx/dt
+%                 |
+%         g4      |     g1
+%                 |
+%                +dy/dt
+%
+% g1 : (+dx/dt,+dy/dt)
+% g2 : (+dx/dt,-dy/dt)
+% g3 : (-dx/dt,-dy/dt)
+% g4 : (-dx/dt,+dy/dt)
+%
+%
+
+clear gx
+clear gt
+clear gy
+
+%% Make Spatial Filter (Seperable)
+%Target Velocity (pixels/frames)
+theta =[45];
+target.theta = theta;
+target.size = [6];
+target.f = 0.75;
+% %Object size
+% target.xSize = round(2*target.size.*cosd(theta));
+% target.ySize = round(2*target.size.*sind(theta));
+% target.size = osize;
+params.target = target;
+
+% [gx gy gt] = STkernel(params);
+[g] = STkernel(params);
+% close all
+%  plotfiltsXY
+%%
+
+for l = 1:size(g,2)
+    for s = 1:size(g(l).speed)
+        for ori = 1:size(g(l).speed(s).ori,2)
+            gx = g(l).speed(s).ori(ori).gx;
+            gy = g(l).speed(s).ori(ori).gy;
+            gt = g(l).speed(s).ori(ori).gt;
+            
+            gto(1,1,:) = gt.o;
+            gte(1,1,:) = gt.e;
+            
+            %             Xe = imfilter(frames,gx.e);
+            %             Xo = imfilter(frames,gx.o);
+            %             Ye = imfilter(frames,gy.e');
+            %             Yo = imfilter(frames,gy.o');
+            
+            XeYe(:,:,f) = conv2(gx.e,gy.e),'full');
+            XeYo(:,:,f) = conv2(gx.e,gy.o),'full');
+            XoYe(:,:,f) = conv2(gx.o,gy.e),'full');
+            XoYo(:,:,f) = conv2(gx.o,gy.o),'full');
+            
+            XeYeTe = convn(XeYe,gte,'full');
+            XeYeTo = convn(XeYe,gto,'full');
+            XeYoTo = convn(XeYo,gto,'full');
+            XeYoTe = convn(XeYo,gte,'full');
+            
+            XoYeTo = convn(XoYe,gto,'full');
+            XoYoTe = convn(XoYo,gte,'full');
+            XoYeTe = convn(XoYe,gte,'full');
+            XoYoTo = convn(XoYo,gto,'full');
+            
+            g1e = XeYeTe...
+                - XoYoTe...
+                + XoYeTo...
+                + XeYoTo;
+            
+            g1o = XoYeTe...
+                + XoYoTo...
+                + XeYoTe...
+                - XeYeTo;
+            
+            g3e = XeYeTe...
+                - XoYoTe...
+                - XoYeTo...
+                - XeYoTo;
+            
+            g3o = XoYeTe...
+                - XoYoTo...
+                + XeYoTe...
+                + XeYeTo;
+            
+            g2e = XeYeTe ...
+                + XoYoTe ...
+                + XoYeTo ...
+                - XeYoTo;
+            
+            g2o = -XoYeTe...
+                +XoYoTo...
+                +XeYoTe...
+                +XeYeTo;
+            
+            g4e = XeYeTe ...
+                + XoYoTe...
+                - XoYeTo...
+                + XeYoTo;
+            
+            g4o = -XoYeTe...
+                - XoYoTo...
+                + XeYoTe...
+                - XeYeTo;
+            
+            plot3Dgabor
+            figure
+            subplot(2,2,1)
+            imagesc(XeYe-XoYo);
+            title('XeYe-XoYo'); %g3 and g1 even
+            subplot(2,2,2)
+            imagesc(XeYe+XoYo);
+            title('XeYe+XoYo');
+            subplot(2,2,3)
+            imagesc(XeYo+XoYe); %g3 and g1 odd
+            title('XeYo+XoYe');
+            subplot(2,2,4)
+            imagesc(XeYo-XoYe);
+            title('XeYo-XoYe');
+            
+        end
+    end
+end

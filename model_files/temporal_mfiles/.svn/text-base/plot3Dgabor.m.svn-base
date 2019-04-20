@@ -1,0 +1,125 @@
+close all
+            figure;
+            [xind yind] = size(squeeze(g3e(:,:,1)));
+            gx1 = squeeze(g3e(round(xind/2),:,:));
+            gy1 = squeeze(g3e(:,round(yind/2),:));            
+            subplot(4,3,1)
+            imagesc(squeeze(g3e(:,:,1)));
+            title('g3 even')
+            xlabel('x');
+            ylabel('y');
+            subplot(4,3,2)
+            imagesc(gx1);
+            xlabel('t')
+            ylabel('x')
+            subplot(4,3,3);
+            imagesc(gy1);
+            xlabel('t')
+            ylabel('y')
+            gx1 = squeeze(g3o(round(xind/2),:,:));
+            gy1 = squeeze(g3o(:,round(yind/2),:));            
+            subplot(4,3,4)
+            imagesc(squeeze(g3o(:,:,1)));
+            title('g3 odd')
+            xlabel('x');
+            ylabel('y');
+            subplot(4,3,5)
+            imagesc(gx1);
+            xlabel('t')
+            ylabel('x')
+            subplot(4,3,6);
+            imagesc(gy1);
+            xlabel('t')
+            ylabel('y')
+            gx1 = squeeze(g1e(round(xind/2),:,:));
+            gy1 = squeeze(g1e(:,round(yind/2),:));            
+            subplot(4,3,7)
+            imagesc(squeeze(g1e(:,:,1)));
+            title('g1 even')
+            xlabel('x');
+            ylabel('y');
+            subplot(4,3,8)
+            imagesc(gx1);
+            xlabel('t')
+            ylabel('x')
+            subplot(4,3,9);
+            imagesc(gy1);
+            xlabel('t')
+            ylabel('y')
+             gx1 = squeeze(g1o(round(xind/2),:,:));
+            gy1 = squeeze(g1o(:,round(yind/2),:));            
+            subplot(4,3,10)
+            imagesc(squeeze(g1o(:,:,1)));
+            title('g1 odd')
+            xlabel('x');
+            ylabel('y');
+            subplot(4,3,11)
+            imagesc(gx1);
+            xlabel('t')
+            ylabel('x')
+            subplot(4,3,12);
+            imagesc(gy1);
+            xlabel('t')
+            ylabel('y')
+              figure;
+            [xind yind] = size(squeeze(g2e(:,:,1)));
+            gx1 = squeeze(g2e(round(xind/2),:,:));
+            gy1 = squeeze(g2e(:,round(yind/2),:));            
+            subplot(4,3,1)
+            imagesc(squeeze(g2e(:,:,1)));
+            title('g2 even')
+            xlabel('x');
+            ylabel('y');
+            subplot(4,3,2)
+            imagesc(gx1);
+            xlabel('t')
+            ylabel('x')
+            subplot(4,3,3);
+            imagesc(gy1);
+            xlabel('t')
+            ylabel('y')
+            gx1 = squeeze(g2o(round(xind/2),:,:));
+            gy1 = squeeze(g2o(:,round(yind/2),:));            
+            subplot(4,3,4)
+            imagesc(squeeze(g2o(:,:,1)));
+            title('g2 odd')
+            xlabel('x');
+            ylabel('y');
+            subplot(4,3,5)
+            imagesc(gx1);
+            xlabel('t')
+            ylabel('x')
+            subplot(4,3,6);
+            imagesc(gy1);
+            xlabel('t')
+            ylabel('y')
+            gx1 = squeeze(g4e(round(xind/2),:,:));
+            gy1 = squeeze(g4e(:,round(yind/2),:));            
+            subplot(4,3,7)
+            imagesc(squeeze(g4e(:,:,1)));
+            title('g4 e')
+            xlabel('x');
+            ylabel('y');
+            subplot(4,3,8)
+            imagesc(gx1);
+            xlabel('t')
+            ylabel('x')
+            subplot(4,3,9);
+            imagesc(gy1);
+            xlabel('t')
+            ylabel('y')
+             gx1 = squeeze(g4o(round(xind/2),:,:));
+            gy1 = squeeze(g4o(:,round(yind/2),:));            
+            subplot(4,3,10)
+            imagesc(squeeze(g4o(:,:,1)));
+            title('g4 odd')
+            xlabel('x');
+            ylabel('y');
+            subplot(4,3,11)
+            imagesc(gx1);
+            xlabel('t')
+            ylabel('x')
+            subplot(4,3,12);
+            imagesc(gy1);
+            xlabel('t')
+            ylabel('y')

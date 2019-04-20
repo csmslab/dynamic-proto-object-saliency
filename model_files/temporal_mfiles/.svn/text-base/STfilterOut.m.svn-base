@@ -1,0 +1,70 @@
+function STfilterOout(frames,gOut)
+%The direction of motion for the filters is
+%
+%               -dy/dt
+%                 |
+%         g3      |     g2
+%                 |
+%       -dx/dt----------- +dx/dt
+%                 |
+%         g4      |     g1
+%                 |
+%                +dy/dt
+%
+% g1 : (+dx/dt,+dy/dt)
+% g2 : (+dx/dt,-dy/dt)
+% g3 : (-dx/dt,-dy/dt)
+% g4 : (-dx/dt,+dy/dt)
+%
+%The opponency channels are g1-g3 and g2-g4
+for l = 1:size(gOut,2)
+    for s = 1:size(gOut(l).speed)
+        for ori = 1:size(gOut(l).speed(s).ori,2)
+            
+            g1xye = gOut(l).speed(s).ori(ori).g1xye;
+            g1xyo = gOut(l).speed(s).ori(ori).g1xyo;
+            g2xye = gOut(l).speed(s).ori(ori).g2xye;
+            g2xyo = gOut(l).speed(s).ori(ori).g2xyo;
+            
+            g1e = gOut(l).speed(s).ori(ori).g1e;
+            g1o = gOut(l).speed(s).ori(ori).g1o;
+            
+            g2e = gOut(l).speed(s).ori(ori).g2e;
+            g2o = gOut(l).speed(s).ori(ori).g2o;
+            
+            g3e = gOut(l).speed(s).ori(ori).g3e;
+            g3o = gOut(l).speed(s).ori(ori).g3o;
+            
+            g4e = gOut(l).speed(s).ori(ori).g4e;
+            g4o = gOut(l).speed(s).ori(ori).g4o;
+            
+            g1 = (g1e.^2+g1o.^2)./(g1xye.^2+g1xyo.^2+1e-4);
+            g2 = (g2e.^2+g2o.^2)./(g2xye.^2+g2xyo.^2+1e-4);
+            g3 = (g3e.^2+g3o.^2)./(g1xye.^2+g1xyo.^2+1e-4);
+            g4 = (g4e.^2+g4o.^2)./(g2xye.^2+g2xyo.^2+1e-4);
+            
+            fout = [g1-g3; g2-g4];
+        end
+    end
+end
+
+%
+% g1xye = XeYe-XoYo;
+% g1xyo = XeYo+XoYe;
+% g2xye = XeYe+XoYo;
+% g2xyo = XeYo-XoYe;
+%
+% g1 = (g1e.^2+g1o.^2)./(g1xye.^2+g1xyo.^2+1e-4);
+% g2 = (g2e.^2+g2o.^2)./(g2xye.^2+g2xyo.^2+1e-4);
+% g3 = (g3e.^2+g3o.^2)./(g1xye.^2+g1xyo.^2+1e-4);
+% g4 = (g4e.^2+g4o.^2)./(g2xye.^2+g2xyo.^2+1e-4);
+% % g1 = (g1e.^2+g1o.^2);
+% % g2 = (g2e.^2+g2o.^2);
+% % g3 = (g3e.^2+g3o.^2);
+% % g4 = (g4e.^2+g4o.^2);
+%
+% % fout = [g1 g2;g3 g4];
+% fout = [g1-g3; g2-g4];
+% fout(floor(size(fout,1)/2),:,:) = max(max(max(fout))+5);
+% % fout(:,floor(size(fout,2)/2),:) = max(max(max(fout))+5);
+% map = fout;

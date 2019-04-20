@@ -1,0 +1,16 @@
+function frames = extractFrames(filename,fstart,fdelta,fstop)
+%loads a movie and extracts the frames between fstart and fstop in
+%increments of fdelta
+%
+%Inputs:
+%
+%filename - filename of movie to load
+%fstart - starting number of frame to extract
+%fdelta - number of frames to skip before extracting next one
+%fstop - last frame to extract
+%
+%Outputs:
+%
+%frames - matrix of extracted frames
+%
+%By Alexander Russ

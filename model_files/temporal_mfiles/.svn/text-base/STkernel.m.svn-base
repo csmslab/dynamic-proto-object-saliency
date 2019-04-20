@@ -1,0 +1,113 @@
+function [g] = STkernel(params)
+%makes 3D Spatial Temporal filters
+%
+%Inputs:
+%
+%params.f: spatial frequency parameter
+%params.theta: orientation
+%params.size: object size perpindicular to edge
+%
+%Outputs:
+%
+%g - gabor filter structure
+%    g(size).speed().orientation().gx  x- component
+%    g(size).speed().orientation().gy  y-component
+%    g(size).speed().orientation().gt  t - component
+
+tgPrs = params.target;
+
+%% Calculate Filter Sizes
+for l = 1:size(tgPrs.size,2)
+    for ori = 1:size(tgPrs.theta,2)
+        for s = 1:size(tgPrs.f,2)
+            
+            f = tgPrs.f(s);
+            
+            
+            
+            wxy = 1/(2*tgPrs.size(l));
+            wx = sqrt(wxy^2/(1+tand(tgPrs.theta(ori))^2));
+            wy = sqrt(wxy^2-wx^2);
+            
+            wt0 = f/tgPrs.size(l)*2*pi/2;
+            
+            wx0 = 2*pi*wx;
+            wy0 = 2*pi*wy;
+            
+            
+            
+            if wx == 0
+                lambdaX = 0;
+                sizeXSpatial = 10;
+                sx = 1;
+            else
+                lambdaX = 1/wx;
+                sizeXSpatial =1/(2*wx)+1;
+                sx = lambdaX/10;
+            end
+            if wy == 0
+                lambdaY = 0;
+                sizeYSpatial = 10;
+                sy = 1;
+            else
+                lambdaY = 1/wy;
+                sizeYSpatial = 1/(2*wy)+1;
+                sy = 1.5*lambdaY/4;
+                sy = lambdaY/10;
+                
+            end
+            
+            x = -floor(sizeXSpatial):floor(sizeXSpatial);
+            y = -floor(sizeYSpatial):floor(sizeYSpatial);
+            
+            
+            
+            if f<0.1
+                t = -20:20;
+                st = 5;
+            else
+                st = 1.5/(4*f)*tgPrs.size(l);
+                st = 1/(4*f)*tgPrs.size(l);
+                t = -4*round(st):4*round(st);
+            end
+            
+            if lambdaX ~= 0
+                gx.o = 1./(sqrt(2*pi).*sx).*exp(-x.^2./(2.*sx.^2)).*sin(wx0.*x);
+                gx.e = 1./(sqrt(2*pi).*sx).*exp(-x.^2./(2.*sx.^2)).*cos(wx0.*x);
+                
+                gx.o = gx.o-mean(gx.o);
+                gx.e = gx.e-mean(gx.e);
+            else
+                gx.o = zeros([size(x)]);
+                gx.e = 1./(sqrt(2*pi).*sx).*exp(-y.^2./(2.*sy.^2)).*ones([size(x)]);
+            end
+            
+            if lambdaY ~= 0
+                gy.o = 1./(sqrt(2*pi).*sy).*exp(-y.^2./(2.*sy.^2)).*sin(wy0.*y);
+                gy.e = 1./(sqrt(2*pi).*sy).*exp(-y.^2./(2.*sy.^2)).*cos(wy0.*y);
+                
+                gy.e = gy.e-mean(gy.e);
+                gy.e = gy.e./sum(abs(gy.e));
+                gy.o = gy.o-mean(gy.o);
+                gy.o = gy.o./sum(abs(gy.o));
+            else
+                gy.o = zeros([size(y)]);
+                gy.e = 1./(sqrt(2*pi).*sy).*exp(-y.^2./(2.*sy.^2)).*ones([size(y)]);
+            end
+            
+            gt.o = 1./(sqrt(2*pi).*st).*exp(-t.^2./(2.*st.^2)).*sin(wt0.*t);
+            gt.e = 1./(sqrt(2*pi).*st).*exp(-t.^2./(2.*st.^2)).*cos(wt0.*t);
+            %
+            gt.e = gt.e-mean(gt.e);
+            gt.e = gt.e./sum(abs(gt.e));
+            gt.o = gt.o-mean(gt.o);
+            gt.o = gt.o./sum(abs(gt.o));
+            
+            g(l).speed(s).ori(ori).gx = gx;
+            g(l).speed(s).ori(ori).gy = gy;
+            g(l).speed(s).ori(ori).gt = gt;
+        end
+    end
+end
+
+

@@ -1,0 +1,60 @@
+function [gy gt] = STkernely(yVel,params)
+%makes gabor based orientation selective filters
+%
+%Inputs:
+%
+%params(1) - w: spatial frequency parameter
+%params(2) - theta: orientation
+%params(3) - phi : spatial phase
+%params(4) - x : 
+%params(5) - y : odd amplitude
+%
+%Outputs:
+%
+%g - gabor filter mask
+
+tgPrs = params.target;
+
+%% Calculate Filter Sizes
+
+% yVel = tgPrs.yVel;%*sind(tgPrs.angle);
+
+divSpatial = 2;
+divTemporal = 2;
+
+sizeYSpatial = 2*tgPrs.xSize+1;
+
+
+if abs(yVel) > 0
+    sizeYTemporal = 2*round(tgPrs.ySize/abs(yVel))+1;
+else
+    sizeYTemporal = 1;
+end
+
+y = -floor(sizeYSpatial/2):floor(sizeYSpatial/2);
+t = -floor(sizeYTemporal/2):floor(sizeYTemporal/2);
+
+lambdaY = sizeYSpatial*2/divSpatial;
+lambdaT = (lambdaY)./abs(yVel);%1./abs(4*xVel);
+
+sy = sizeYSpatial*2/(divSpatial*3);
+st = sizeYTemporal*2/(divTemporal*3);
+
+Y = y;
+T = t;
+
+gy.o = 1./(sqrt(2*pi).*sy).*exp(-Y.^2./(2.*sy.^2)).*sin(2.*pi.*Y/lambdaY);
+gy.o = gy.o-mean(gy.o);
+gy.o = gy.o./sum(abs(gy.o));
+
+gy.e = 1./(sqrt(2*pi).*sy).*exp(-Y.^2./(2.*sy.^2)).*cos(2.*pi.*Y/lambdaY);
+gy.e = gy.e-mean(gy.e);
+gy.e = gy.e./sum(abs(gy.e));
+
+gt.o = 1./(sqrt(2*pi).*st).*exp(-T.^2./(2.*st.^2)).*sin(2.*pi.*T/lambdaT);
+gt.o = gt.o-mean(gt.o);
+gt.o = gt.o./sum(abs(gt.o));
+
+gt.e = 1./(sqrt(2*pi).*st).*exp(-T.^2./(2.*st.^2)).*cos(2.*pi.*T/lambdaT);
+gt.e = gt.e-mean(gt.e);
+gt.e = gt.e./sum(abs(gt.e));

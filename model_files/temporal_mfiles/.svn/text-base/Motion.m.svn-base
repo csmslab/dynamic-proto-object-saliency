@@ -1,0 +1,24 @@
+function map = Motion(filename)
+
+params = defaultTemporalParams;
+numFrames = 120;
+frames = extractFrames(filename,1,1,numFrames);
+frames = cropFrames(frames,550,900,1250,1750);
+frames = rgb2int_frames(frames);
+
+%%Generate filter parameters
+theta =[45];
+target.theta = theta;
+target.size = [8];
+target.f = [0.75];
+params.target = target;
+
+
+%each frame is 40ms. Thus f = 25Hz
+
+implay(frames);
+tic
+ map = STfilter3Dconv(frames,params);
+ toc
+ STfilterOut(frames,map);
+% implay(map);

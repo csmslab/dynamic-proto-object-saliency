@@ -1,0 +1,6 @@
+function f = createFrames(map)
+%converts a frame matrix into the frame structure necessary to play a movie
+
+for i = 1:size(map,4)
+    f(i) = im2frame(normalizeImage(map(:,:,:,i)));
+end

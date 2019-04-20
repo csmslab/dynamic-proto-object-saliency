@@ -1,0 +1,55 @@
+function mapx =  STfilterx(map,params)
+%performs spatio temporal filtering as defined by params on the input
+%frames
+%
+%Inputs:
+%frames - input frames to be filtered
+%params - parameter structure
+%
+%Outputs:
+%newMap - filtered frames
+%
+%By Alexander Russell, Johns Hopkins University, 2010
+
+for a = 1:length(params.xVel)
+    %% Create Filters
+    fprintf('Generating Filters....\n');
+    [gx, gt] = STkernelx(params);
+    plotfilts;
+
+    %% create normalization values
+    numFrames = size(map,3);
+    fprintf('Spatial filters only...');
+    for f = 1:numFrames
+        fprintf('.');
+        mapge(:,:,f) = conv2(1,gx.e,squeeze(map(:,:,f)),'same');
+        mapgo(:,:,f) = conv2(1,gx.o,squeeze(map(:,:,f)),'same');
+    end
+    %% Filter frames in x-t
+
+    fprintf('\n Spatio Temporal filter (x).');
+
+    for y = 1:size(map(:,:,1),1)
+        fprintf('.');
+        mapx_texe = conv2(gx.e,gt.e,squeeze(map(y,:,:)),'same');
+        mapx_toxo = conv2(gx.o,gt.o,squeeze(map(y,:,:)),'same');
+        mapx_toxe = conv2(gx.e,gt.o,squeeze(map(y,:,:)),'same');
+        mapx_texo = conv2(gx.o,gt.e,squeeze(map(y,:,:)),'same');
+
+        mapx_re = mapx_texe+mapx_toxo;
+        mapx_ro = mapx_toxe-mapx_texo;
+        mapx_le = mapx_texe-mapx_toxo;
+        mapx_lo = mapx_toxe+mapx_texo;
+
+        mapx_r = sqrt(mapx_re.^2+mapx_ro.^2);
+        mapx_l = sqrt(mapx_le.^2+mapx_lo.^2);
+        ge =squeeze(mapge(y,:,:));
+        go =squeeze(mapgo(y,:,:));
+        ge((ge<1e-5)&(ge>-1e-5))=1e-6;
+        go((go<1e-5)&(go>-1e-5))=1e-6;
+        temp =  mapx_r - mapx_l;
+        mapx(y,:,:) = temp./sqrt(1+ge.^2+go.^2);
+    end
+    fprintf('\n');
+end
+

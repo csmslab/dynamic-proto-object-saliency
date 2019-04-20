@@ -1,0 +1,425 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles
+END
+filterTest.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/filterTest.m
+END
+STfilter.asv
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/STfilter.asv
+END
+makeSpatialTemporal.asv
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/makeSpatialTemporal.asv
+END
+makeGaus.m
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/makeGaus.m
+END
+makeSpatialTemporal.m
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/makeSpatialTemporal.m
+END
+rgb2int_frames.m
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/rgb2int_frames.m
+END
+makeGauss1D.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/makeGauss1D.m
+END
+STfilt.m
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STfilt.m
+END
+Motion.m
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/Motion.m
+END
+extractFrames.asv
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/extractFrames.asv
+END
+STkernel2.m
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STkernel2.m
+END
+filterTest3D.m
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/filterTest3D.m
+END
+gabor_test3D.asv
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/gabor_test3D.asv
+END
+make2DGabor.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/users/arusse21/!svn/ver/23/Grouping%20Code/temporal_mfiles/make2DGabor.m
+END
+STfilter2.m
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STfilter2.m
+END
+makeGaus1D.asv
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/makeGaus1D.asv
+END
+plotfilts.m
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/plotfilts.m
+END
+mergeMaps.m
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/mergeMaps.m
+END
+STkernely.m
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STkernely.m
+END
+plotF.asv
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/plotF.asv
+END
+STfilterx.asv
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STfilterx.asv
+END
+STfiltery.asv
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STfiltery.asv
+END
+Gauss.m
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/Gauss.m
+END
+STfilter3D.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/STfilter3D.m
+END
+STfiltery.m
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STfiltery.m
+END
+makeTemporalFilter.m
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/users/arusse21/!svn/ver/24/Grouping%20Code/temporal_mfiles/makeTemporalFilter.m
+END
+GaussFilter.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/GaussFilter.m
+END
+parkhurstTest_seperable3D.asv
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/parkhurstTest_seperable3D.asv
+END
+createFrames.m
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/createFrames.m
+END
+STfilterOout.m
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/STfilterOout.m
+END
+gabor_test3Dconv.m
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/gabor_test3Dconv.m
+END
+magFilter.m
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/magFilter.m
+END
+makeVid.m
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/makeVid.m
+END
+STfilter2D.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STfilter2D.m
+END
+STfilterOut.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/STfilterOut.m
+END
+STfilter.m
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/users/arusse21/!svn/ver/27/Grouping%20Code/temporal_mfiles/STfilter.m
+END
+plotfiltsXY.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/users/arusse21/!svn/ver/25/Grouping%20Code/temporal_mfiles/plotfiltsXY.m
+END
+parkhurstTest_seperable.asv
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/parkhurstTest_seperable.asv
+END
+parkhurstTest_seperable.m
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/users/arusse21/!svn/ver/25/Grouping%20Code/temporal_mfiles/parkhurstTest_seperable.m
+END
+STkernel1.m
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/STkernel1.m
+END
+STkernelXY.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/users/arusse21/!svn/ver/25/Grouping%20Code/temporal_mfiles/STkernelXY.m
+END
+extractFrames.m
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/extractFrames.m
+END
+STfilter2.asv
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STfilter2.asv
+END
+mergeMaps.asv
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/mergeMaps.asv
+END
+Gauss.asv
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/Gauss.asv
+END
+STkernelx.m
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STkernelx.m
+END
+seperabableGabor_test.m
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/seperabableGabor_test.m
+END
+gabor_test3D.m
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/gabor_test3D.m
+END
+plot3Dgabor.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/plot3Dgabor.m
+END
+makeGaus1D.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/makeGaus1D.m
+END
+makeSpatialFilter2.m
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/makeSpatialFilter2.m
+END
+plotF.m
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/plotF.m
+END
+STfilterx.m
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STfilterx.m
+END
+makeTemporalParams.m
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/users/arusse21/!svn/ver/23/Grouping%20Code/temporal_mfiles/makeTemporalParams.m
+END
+STkernel.m
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/users/arusse21/!svn/ver/27/Grouping%20Code/temporal_mfiles/STkernel.m
+END
+defaultTemporalParams.m
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/defaultTemporalParams.m
+END
+parkhurstTest_seperable3D.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/parkhurstTest_seperable3D.m
+END
+makeSepGabor.m
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/makeSepGabor.m
+END
+makeSpatialFilter.m
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/makeSpatialFilter.m
+END
+cropFrames.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/cropFrames.m
+END
+STfiltKernel.m
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STfiltKernel.m
+END
+makeTestData.m
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/users/arusse21/!svn/ver/27/Grouping%20Code/temporal_mfiles/makeTestData.m
+END
+gabor_test3D_imfilter.asv
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/gabor_test3D_imfilter.asv
+END
+STfilter3Dconv.m
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/STfilter3Dconv.m
+END
+plotfiltsy.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/plotfiltsy.m
+END
+gabor_test3D_imfilter.m
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/gabor_test3D_imfilter.m
+END
+makeVid.asv
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/users/arusse21/!svn/ver/29/Grouping%20Code/temporal_mfiles/makeVid.asv
+END
+makeSpatialBP.m
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/makeSpatialBP.m
+END
+STfilter2D.asv
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/users/arusse21/!svn/ver/17/Grouping%20Code/temporal_mfiles/STfilter2D.asv
+END
+parkhurstTest.m
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/users/arusse21/!svn/ver/23/Grouping%20Code/temporal_mfiles/parkhurstTest.m
+END

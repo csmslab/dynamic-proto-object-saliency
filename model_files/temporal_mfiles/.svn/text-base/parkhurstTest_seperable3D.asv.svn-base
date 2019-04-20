@@ -1,0 +1,161 @@
+%tests motion filter designed by derrick parkhurst
+
+
+
+% ftemp = makeTestData(50,45,90);
+% for i = 1:size(ftemp,2)
+%     frames_t(:,:,:,i) = imresize(ftemp(i).cdata,[128 128]);
+%     frames = squeeze(frames_t(:,:,1,i));
+% end
+% clear frames_t
+
+
+clear gx
+clear gt
+clear gy
+
+%% Make Spatial Filter (Seperable)
+%Target Velocity (pixels/frames)
+theta =[30];
+target.theta = theta;
+target.size = [6];
+target.f = 1;
+%Object size
+target.xSize = round(2*target.size.*cosd(theta));
+target.ySize = round(2*target.size.*sind(theta));
+% target.size = osize;
+params.target = target;
+
+% [gx gy gt] = STkernel(params);
+[g] = STkernel(params);
+% close all
+%  plotfiltsXY
+%%
+
+for l = 1:size(g,2)
+    for s = 1:size(g(l).speed)
+        for ori = 1:size(g(l).speed(s).ori,2)
+            gx = g(l).speed(s).ori(ori).gx;
+            gy = g(l).speed(s).ori(ori).gy;
+            gt = g(l).speed(s).ori(ori).gt;
+            [Xo,Yo,To] = meshgrid(gx.o,gy.o,gt.o);
+            [Xe,Ye,Te] = meshgrid(gx.e,gy.e,gt.e);
+%             g1 = (Te.*Xe.*Ye...
+%                 -Te.*Xo.*Yo...
+%                 -To.*Xo.*Ye...
+%                 -To.*Xe.*Yo); %even -v
+%             
+%             g2 = Xo.*Ye.*Te...%odd -v
+%                 -Xo.*Yo.*To...
+%                 +Xe.*Yo.*Te...
+%                 +Xe.*Ye.*To; 
+%             
+%             g3 = (Te.*Xe.*Ye...
+%                 -Te.*Xo.*Yo...
+%                 +To.*Xo.*Ye...
+%                 +To.*Xe.*Yo); %even -v
+%             
+%             
+            
+            g1 = (Te.*Xe.*Ye...
+                -Te.*Xo.*Yo...
+                -To.*Xo.*Ye...
+                -To.*Xe.*Yo); %even -v
+            g2 = Xo.*Ye.*Te...%odd -v
+                -Xo.*Yo.*To...
+                +Xe.*Yo.*Te...
+                +Xe.*Ye.*To; 
+            g3 = (Te.*Xe.*Ye...
+                -Te.*Xo.*Yo...
+                +To.*Xo.*Ye...
+                +To.*Xe.*Yo); %even -v
+            g4 = Xo.*Ye.*Te...%odd -v
+                +Xo.*Yo.*To...
+                +Xe.*Yo.*Te...
+                -Xe.*Ye.*To; 
+
+            g5 = (Te.*Xe.*Ye...
+                +Te.*Xo.*Yo...
+                -To.*Xo.*Ye...
+                -To.*Xe.*Yo); %even -v
+            g6 = Xo.*Ye.*Te...%odd -v
+                -Xo.*Yo.*To...
+                +Xe.*Yo.*Te...
+                +Xe.*Ye.*To; 
+            g7 = (Te.*Xe.*Ye...
+                -Te.*Xo.*Yo...
+                +To.*Xo.*Ye...
+                +To.*Xe.*Yo); %even -v
+            g8 = Xo.*Ye.*Te...%odd -v
+                +Xo.*Yo.*To...
+                +Xe.*Yo.*Te...
+                -Xe.*Ye.*To; 
+            
+           
+           
+            close all
+            figure;
+            [xind yind] = size(squeeze(g1(:,:,1)));
+            gx1 = squeeze(g1(round(xind/2),:,:));
+            gy1 = squeeze(g1(:,round(yind/2),:));            
+            subplot(4,3,1)
+            imagesc(squeeze(g1(:,:,1)));
+            title('even')
+            xlabel('x');
+            ylabel('y');
+            subplot(4,3,2)
+            imagesc(gx1);
+            xlabel('t')
+            ylabel('x')
+            subplot(4,3,3);
+            imagesc(gy1);
+            xlabel('t')
+            ylabel('y')
+            gx1 = squeeze(g2(round(xind/2),:,:));
+            gy1 = squeeze(g2(:,round(yind/2),:));            
+            subplot(4,3,4)
+            imagesc(squeeze(g2(:,:,1)));
+            title('odd')
+            xlabel('x');
+            ylabel('y');
+            subplot(4,3,5)
+            imagesc(gx1);
+            xlabel('t')
+            ylabel('x')
+            subplot(4,3,6);
+            imagesc(gy1);
+            xlabel('t')
+            ylabel('y')
+            gx1 = squeeze(g3(round(xind/2),:,:));
+            gy1 = squeeze(g3(:,round(yind/2),:));            
+            subplot(4,3,7)
+            imagesc(squeeze(g3(:,:,1)));
+            title('odd')
+            xlabel('x');
+            ylabel('y');
+            subplot(4,3,8)
+            imagesc(gx1);
+            xlabel('t')
+            ylabel('x')
+            subplot(4,3,9);
+            imagesc(gy1);
+            xlabel('t')
+            ylabel('y')
+             gx1 = squeeze(g4(round(xind/2),:,:));
+            gy1 = squeeze(g4(:,round(yind/2),:));            
+            subplot(4,3,10)
+            imagesc(squeeze(g4(:,:,1)));
+            title('odd')
+            xlabel('x');
+            ylabel('y');
+            subplot(4,3,11)
+            imagesc(gx1);
+            xlabel('t')
+            ylabel('x')
+            subplot(4,3,12);
+            imagesc(gy1);
+            xlabel('t')
+            ylabel('y')
+        end
+    end
+end

@@ -1,0 +1,11 @@
+function msk =  makeSpatialBP()
+%Creates a bandpass filter to be used in the spatila domain.
+%
+%Inputs:
+%
+%
+%Outputs:
+%msk - spatial filter mask
+%
+%By Alexander Russell, Johns Hopkins University, 2011
+

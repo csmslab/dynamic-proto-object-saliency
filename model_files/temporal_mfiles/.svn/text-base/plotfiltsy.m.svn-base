@@ -1,0 +1,42 @@
+figure;
+subplot(2,2,1)
+plot(gy.e)
+title('gy.e');
+subplot(2,2,2)
+plot(gy.o)
+title('gy.o');
+subplot(2,2,3)
+plot(gt.e)
+title('gt.e');
+subplot(2,2,4)
+plot(gt.o)
+title('gt.o');
+figure;
+[yo,To] = meshgrid(gy.o,gt.o);
+[ye,Te] = meshgrid(gy.e,gt.e);
+subplot(2,4,1)
+imagesc(ye.*Te)
+title('ye.*Te')
+subplot(2,4,2)
+imagesc(yo.*To)
+title('yo.*To')
+subplot(2,4,3)
+imagesc(ye.*To)
+title('ye.*To')
+subplot(2,4,4)
+imagesc(yo.*Te)
+title('yo.*Te');
+subplot(2,4,5)
+imagesc(ye.*Te+yo.*To)
+title('right even')
+subplot(2,4,6)
+imagesc(ye.*To+yo.*Te)
+imagesc(ye.*To-yo.*Te)
+title('right odd (-)')
+subplot(2,4,7)
+imagesc(ye.*Te-yo.*To)
+title('left even')
+subplot(2,4,8)
+imagesc(ye.*To+yo.*Te)
+title('left odd (+)');
+

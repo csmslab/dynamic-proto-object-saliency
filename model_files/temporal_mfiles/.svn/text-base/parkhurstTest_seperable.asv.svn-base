@@ -1,0 +1,59 @@
+%tests motion filter designed by derrick parkhurst
+
+
+
+% ftemp = makeTestData(50,45,90);
+% for i = 1:size(ftemp,2)
+%     frames_t(:,:,:,i) = imresize(ftemp(i).cdata,[128 128]);
+%     frames = squeeze(frames_t(:,:,1,i));    
+% end
+% clear frames_t
+
+
+%% Make Temporal Component of Filter
+ r1 = makeTemporalFilter('strong');
+ r2 = makeTemporalFilter('weak');
+
+ %% Make Spatial Filter (Seperable)
+ %Target Velocity (pixels/frames)
+angle = 45;
+Osize = 5;
+%Object size
+target.xSize = round(Osize.*cosd(angle));
+target.ySize = round(Osize.*sind(angle));  
+target.size = Osize;
+params.target = target;
+
+[gx gy] = STkernelXY(params); 
+close all
+ plotfiltsXY
+%%
+[Xo,Yo] = meshgrid(gx.o,gy.o);
+[Xe,Ye] = meshgrid(gx.e,gy.e);
+g1 = Xe.*Ye+Xo.*Yo;
+g2 = Xe.*Yo-Xo.*Ye;
+%%
+b1 = repmat(g1,[1,1,length(r1)]);
+b2 = repmat(g2,[1,1,length(r2)]);
+ 
+ gamma = 0.5
+ clear y1;
+ clear y2;
+ clear y3;
+ for i = 1:length(r1)
+    y1(:,:,i) = r1(i).*b1(:,:,i);
+    y2(:,:,i) = r2(i).*b2(:,:,i);
+    y3(:,:,i) = gamma.*y1(:,:,i)+(1-gamma).*y2(:,:,i);
+%     y3(:,:,i) = y3(:,:,i) - mean(mean(y3(:,:,i)));
+ end
+%  close all
+%  [x1,x2] = size(g1);
+%  x1 = round(x1/2);
+%  x2 = round(x2/2);
+%  figure;
+%  subplot(2,1,1)
+%  imagesc(squeeze(y3(x1,:,:)));
+%  title('x')
+%  subplot(2,1,2)
+%  imagesc(squeeze(y3(:,x2,:)));
+%  title('y')

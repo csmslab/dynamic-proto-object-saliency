@@ -1,0 +1,37 @@
+function [mov map] = filterTest()
+params = defaultTemporalParams();
+
+%Add object velocity + size paramters
+
+%Target Velocity (pixels/frames)
+Tvel = 10;
+angles = [0 30 60 90];
+target.xVel = Tvel.*cosd(angles);
+target.yVel = Tvel.*sind(angles);
+%Target direction in degrees. o is x-direction to the right. 90 is vertical
+
+
+%Object size
+target.xSize = 16;
+target.ySize = 16;  
+
+params.target = target;
+
+
+% [gx, gy, gt] = STkernel2(params);
+% plotfilts;
+
+%%     Generate Test Data
+ftemp = makeTestData(50,45,90);
+for i = 1:size(ftemp,2)
+    frames(:,:,:,i) = imresize(ftemp(i).cdata,[128 128]);
+end
+
+%%     Filter Object
+[mapx mapy] = STfilter(frames,params);
+%% Merge X and Y maps
+[map, angles] = mergeMaps(mapx,mapy,params);
+mov = createFrames(map);
+close all
+h = figure;
+movie(h,mov,5);

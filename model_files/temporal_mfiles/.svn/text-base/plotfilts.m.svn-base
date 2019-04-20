@@ -1,0 +1,42 @@
+figure;
+subplot(2,2,1)
+plot(gx.e)
+title('gx.e');
+subplot(2,2,2)
+plot(gx.o)
+title('gx.o');
+subplot(2,2,3)
+plot(gt.e)
+title('gt.e');
+subplot(2,2,4)
+plot(gt.o)
+title('gt.o');
+figure;
+[Xo,To] = meshgrid(gx.o,gt.o);
+[Xe,Te] = meshgrid(gx.e,gt.e);
+subplot(2,4,1)
+imagesc(Xe.*Te)
+title('Xe.*Te')
+subplot(2,4,2)
+imagesc(Xo.*To)
+title('Xo.*To')
+subplot(2,4,3)
+imagesc(Xe.*To)
+title('Xe.*To')
+subplot(2,4,4)
+imagesc(Xo.*Te)
+title('Xo.*Te');
+subplot(2,4,5)
+imagesc(Xe.*Te+Xo.*To)
+title('right even')
+subplot(2,4,6)
+% imagesc(Xe.*To+Xo.*Te)
+imagesc(Xe.*To-Xo.*Te)
+title('right odd (-)')
+subplot(2,4,7)
+imagesc(Xe.*Te-Xo.*To)
+title('left even')
+subplot(2,4,8)
+imagesc(Xe.*To+Xo.*Te)
+title('left odd (+)');
+

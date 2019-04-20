@@ -1,0 +1,23 @@
+function STfilterOout(gOut)
+
+
+% 
+% g1xye = XeYe-XoYo;
+% g1xyo = XeYo+XoYe;
+% g2xye = XeYe+XoYo;
+% g2xyo = XeYo-XoYe;
+% 
+% g1 = (g1e.^2+g1o.^2)./(g1xye.^2+g1xyo.^2+1e-4);
+% g2 = (g2e.^2+g2o.^2)./(g2xye.^2+g2xyo.^2+1e-4);
+% g3 = (g3e.^2+g3o.^2)./(g1xye.^2+g1xyo.^2+1e-4);
+% g4 = (g4e.^2+g4o.^2)./(g2xye.^2+g2xyo.^2+1e-4);
+% % g1 = (g1e.^2+g1o.^2);
+% % g2 = (g2e.^2+g2o.^2);
+% % g3 = (g3e.^2+g3o.^2);
+% % g4 = (g4e.^2+g4o.^2);
+% 
+% % fout = [g1 g2;g3 g4];
+% fout = [g1-g3; g2-g4];
+% fout(floor(size(fout,1)/2),:,:) = max(max(max(fout))+5);
+% % fout(:,floor(size(fout,2)/2),:) = max(max(max(fout))+5);
+% map = fout;

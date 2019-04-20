@@ -1,0 +1,45 @@
+function makeVid(data,frames,mode,videoname)
+
+if nargin == 1
+    videoname = 'videos_results\alex2.avi';
+end
+
+if ndims(data) == 3 %make greyscale rgb frames
+    data = data./(max(max(max(abs(data)))));
+    data = data./2+0.5;
+    data(1,:,:) = 1;
+    data(end,:,:) = 1;
+    data(:,1,:) = 1;
+    data(:,end,:) = 1;
+    data(floor(size(data,1)/2),:,:)=1;
+    data(:,floor(size(data,2)/2),:)=1;
+    if mode == 1
+        frames = double(frames)./max(max(max(double(frames))));
+        f1 = horzcat(frames, frames);
+        data1 = vertcat(f1, data);
+        
+    else
+        data1 = data;
+    end
+    rgb(:,:,1,:) = data1;
+    rgb(:,:,2,:) = data1;
+    rgb(:,:,3,:) = data1;
+elseif ndims(data)==4
+     data = data./(max(max(max(max(abs(data))))));
+     rgb = data./2+0.5;
+else
+    error('makeVideo needs mxnxf or mxnx3xf array');
+end
+
+if exist(videoname,'file')
+    delete videoname
+end
+aviobj=avifile(videoname); %creates AVI file, test.avi
+hf= figure('visible','on'); %turns visibility of figure off
+hax=axes;
+for k=1:size(rgb,4)
+image(squeeze(rgb(:,:,:,k)),'parent',hax); %puts image in invisible axes
+aviobj=addframe(aviobj,hf); %adds frames to the AVI file
+end
+aviobj=close(aviobj); %closes the AVI file
+close(hf); %closes the handle to invisible figure

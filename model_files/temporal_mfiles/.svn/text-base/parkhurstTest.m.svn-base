@@ -1,0 +1,44 @@
+%tests motion filter designed by derrick parkhurst
+ r1 = makeTemporalFilter('strong');
+ r2 = makeTemporalFilter('weak');
+
+ 
+theta = pi/4;
+w = 2;
+sigma = 3;
+s.w = w;
+s.theta = theta;
+s.phi = pi/2+0.1;
+s.sigma = sigma;
+ 
+w.w = w;
+w.theta = theta;
+w.phi = 0.1;
+w.sigma = sigma;
+ 
+ g1 = make2DGabor(s);
+ g2 = make2DGabor(w);
+ b1 = repmat(g1,[1,1,length(r1)]);
+ b2 = repmat(g2,[1,1,length(r1)]);
+ 
+ gamma = 0.7
+ clear y1;
+ clear y2;
+ clear y3;
+ for i = 1:length(r1)
+    y1(:,:,i) = r1(i).*b1(:,:,i);
+    y2(:,:,i) = r2(i).*b2(:,:,i);
+    y3(:,:,i) = gamma.*y1(:,:,i)+(1-gamma).*y2(:,:,i);
+%     y3(:,:,i) = y3(:,:,i) - mean(mean(y3(:,:,i)));
+ end
+ close all
+ [x1,x2] = size(g);
+ x1 = round(x1/2);
+ x2 = round(x2/2);
+ figure;
+ subplot(2,1,1)
+ imagesc(squeeze(y3(x1,:,:)));
+ title('x')
+ subplot(2,1,2)
+ imagesc(squeeze(y3(:,x2,:)));
+ title('y')

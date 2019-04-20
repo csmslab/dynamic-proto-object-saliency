@@ -1,0 +1,21 @@
+function msk = makeGauss1D(dim,params)
+%makes a 1D  gaussian mask according to params
+%
+%Inputs:
+%
+%dim - vector overwhich to make the mask
+%params - parameter structure for gaussian
+%
+%Outputs:
+%
+%msk - 1D Gaussian mask normalized to 1
+%
+%By Alexander Russell, Johns Hopkins University, 2010
+
+
+sigma = params.sigma;
+mean = params.mean;
+
+msk = 1./(sqrt(2*pi*sigma^2)).*exp(-(dim-mean).^2./(2*sigma^2));
+
+

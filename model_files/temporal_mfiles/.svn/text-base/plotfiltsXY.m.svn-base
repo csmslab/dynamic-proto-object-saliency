@@ -1,0 +1,54 @@
+figure;
+subplot(2,2,1)
+plot(gx.e)
+title('gx.e');
+subplot(2,2,2)
+plot(gx.o)
+title('gx.o');
+subplot(2,2,3)
+plot(gy.e)
+title('gy.e');
+subplot(2,2,4)
+plot(gy.o)
+title('gy.o');
+figure;
+[Xo,Yo] = meshgrid(gx.o,gy.o);
+[Xe,Ye] = meshgrid(gx.e,gy.e);
+subplot(2,4,1)
+imagesc(Xe.*Ye)
+title('Xe.*Te')
+subplot(2,4,2)
+imagesc(Xo.*Yo)
+title('Xo.*To')
+subplot(2,4,3)
+imagesc(Xe.*Yo)
+title('Xe.*To')
+subplot(2,4,4)
+imagesc(Xo.*Ye)
+title('Xo.*Te');
+subplot(2,4,5)
+imagesc(Xe.*Ye+Xo.*Yo)
+title('right even')
+subplot(2,4,6)
+% imagesc(Xe.*To+Xo.*Te)
+imagesc(Xe.*Yo-Xo.*Ye)
+title('right odd (-)')
+subplot(2,4,7)
+imagesc(Xe.*Ye-Xo.*Yo)
+title('left even')
+subplot(2,4,8)
+imagesc(Xe.*Yo+Xo.*Ye)
+title('left odd');
+% figure;
+% imagesc(Xe.*Yo-Xo.*Ye)
+% titlestr = ['target x-size ' num2str(target.xSize) ' y-size ' num2str(target.ySize) ', angle' num2str(theta)];
+% x = 1:length(gx.e);
+% y = round(x.*tand(theta));
+% y1 = length(gy.e)-y;
+% title(titlestr);
+% xlabel('X');
+% hold on
+% plot(x,y,'k','LineWidth',3);
+% plot(x,y1,'m','LineWidth',3);
+% legend('Tuned Angle','Edge'); 
+

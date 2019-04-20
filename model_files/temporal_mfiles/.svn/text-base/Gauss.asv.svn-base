@@ -1,0 +1,13 @@
+function newMap = Gauss(map,params)
+%smooths map with a gaussian defined by params
+
+
+
+gPrs.sigma = 2;
+gPrs.mean = 0;
+dim = -5:5;
+msk = makeGauss1D(dim,gPrs);
+newMap = conv2(map,msk,msk,'valid');
+
+
+

@@ -1,0 +1,37 @@
+function [map] = STfilter3D(frames,params)
+%filters frames with the 3D spatial temporal filter built from the
+%specificiations in the params structure
+%
+%Filters are labelled according to
+%
+%               -dy/dt
+%                 |
+%         g3      |     g2
+%                 |
+%       -dx/dt----------- +dx/dt
+%                 |
+%         g4      |     g1
+%                 |
+%                +dy/dt
+%
+% 1 : (+dx/dt,+dy/dt)
+% 2 : (+dx/dt,-dy/dt)
+% 3 : (-dx/dt,-dy/dt)
+% 4 : (-dx/dt,+dy/dt)
+
+
+%% Guassian blur image
+fprintf('Blurring frames...');
+numFrames = size(frames,4);
+for f = 5:numFrames
+    fprintf('.');
+    map_x(:,:,f-4) = GaussFilter(frames(10:end-10,10:end-10,2,f),params,'x');   
+    map_y(:,:,f-4) = GaussFilter(frames(10:end-10,10:end-10,2,f),params,'y');   
+end
+fprintf('\n');
+
+%%     Filter Object
+mapx = STfilterx(map_x,params);
+mapy = STfiltery(map_y,params);
+
+

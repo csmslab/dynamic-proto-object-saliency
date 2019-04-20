@@ -1,0 +1,24 @@
+function g = make2DGabor(params)
+%makes the two D gabor filter as described in Derrick Parkhurst's Thesis
+%
+%Inputs
+%
+%w - spatial frequency
+%theta - spatial orientation
+%phi - spatial phase
+
+ 
+w = params.w;
+theta = params.theta;
+phi = params.phi;
+sigma = params.sigma;
+x = -4*sigma:4*sigma;
+y = -4*sigma:4*sigma;
+
+[X,Y] = meshgrid(x,y);
+
+g = cos(w.*(cos(theta).*X-sin(theta).*Y)+phi).*exp(-(X.^2+Y.^2)./(2.*sigma));
+
+
+
+

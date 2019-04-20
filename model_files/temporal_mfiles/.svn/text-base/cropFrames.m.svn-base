@@ -1,0 +1,16 @@
+function cframes = cropFrames(frames,xmin,xmax,ymin,ymax)
+%Crops a sequence of input frames
+%
+%Inputs:
+%
+%frames - matrix of frames to crop
+%xmin - minimum x bound
+%xmax - maximum xbound
+%ymin - minimum y bound
+%ymax - maximum y bound
+%
+%Outputs:
+%
+%cframes - cropped frames
+
+cframes = frames(xmin:xmax,ymin:ymax,:,:);

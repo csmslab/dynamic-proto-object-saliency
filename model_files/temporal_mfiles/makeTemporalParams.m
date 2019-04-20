@@ -1,0 +1,7 @@
+function params = makeTemporalParams()
+%sets the default parameters for spatio-temporal filtering
+
+gPrs.mean = 0;
+gPrs.sigma = 1;
+
+params.gPrs = gPrs;
