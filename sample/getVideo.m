@@ -11,6 +11,7 @@ while (~isDone(videoFReader))
     fprintf("\nReading frame %d",frame_cnt);
     curr_frame = step(videoFReader);
     vid_frames(:,:,:,frame_cnt) = curr_frame;
+	frame_cnt = frame_cnt + 1;
 end
 
 release(videoFReader);
